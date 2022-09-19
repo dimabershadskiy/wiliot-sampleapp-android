@@ -62,7 +62,7 @@ object Network {
 
     suspend fun getToken(): String {
         return oauthRetrofitService
-            .getTokenAsync(BuildConfig.accountEmail, BuildConfig.accountPassword)
+            .getTokenAsync(BuildConfig.apiKey)
             .await()
             .body()!!
             .access_token
@@ -247,10 +247,9 @@ private class MqttHelper {
 
 interface OAuthService {
 
-    @POST("v1/auth/token?")
+    @POST("v1/auth/token/api")
     fun getTokenAsync(
-        @Query("username") username: String,
-        @Query("password") password: String,
+        @Header("Authorization") authorization: String
     ): Deferred<Response<TokenResponse>>
 
     @POST("v1/owner/{ownerId}/gateway/{gatewayId}/mobile")

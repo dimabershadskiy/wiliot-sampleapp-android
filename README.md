@@ -4,11 +4,16 @@ To run this sample project you need to create file `constants.gradle` with such 
 
 ```
 ext {
-    owner_id = "\"your_desired_owner_id\""
-    account_email = "\"example@domain.com\""
-    account_password = "\"YourAccountPassword\""
+    owner_id = "\"owner_id_that_was_used_during_api_key_creation\""
+    api_key = "\"your_generated_api_key\""
 }
 ```
+
+# Api Key
+
+In order to generate your API KEY you should go to `platform.wiliot.com/account/security` and press 'Add New'.
+In the Add Key dialog please choose Edge Management from dropdown menu 'Select Catalog' and press 'Generate'.
+Then you can use your API KEY to get Access Token.
 
 # Tokens
 
@@ -16,13 +21,12 @@ Access token and gateway token has limited life time. When it expires you should
 
 ## Access token
 
-To receive access token use `@POST v1/auth/token`.
+To receive access token use `@POST v1/auth/token/api`.
 
 ```
     @POST("v1/auth/token?")
     fun getTokenAsync(
-        @Query("username") username: String,
-        @Query("password") password: String,
+        @Header("Authorization") apiKey: String,
     ): Deferred<Response<TokenResponse>>
 ```
 
@@ -32,23 +36,15 @@ To receive access token use `@POST v1/auth/token`.
         val id_token: String,
         val userId: String,
         val expires_in: Long,
-        val token_type: String,
-        val refresh_token: String
+        val token_type: String
     )
 ```
 
-When access token expires you can refresh it using `@POST v1/auth/refresh?`.
-
-```
-    @POST("v1/auth/refresh?")
-    fun refreshTokenAsync(
-        @Query("refresh_token", encoded = true) refresh_token: String
-    ): Deferred<Response<TokenResponse>>
-```
+When access token expires you can refresh it using `@POST v1/auth/token/api` again.
 
 ## GW token
 
-Initially you can request GW token using previously received access token (from `@POST v1/auth/token`).
+Initially you can request GW token using previously received access token (from `@POST v1/auth/token/api`).
 Just use `@POST v1/owner/{ownerId}/gateway/{gatewayId}/mobile`:
 
 ```

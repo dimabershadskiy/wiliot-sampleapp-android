@@ -25,15 +25,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "ownerId", owner_id
-            buildConfigField "String", "accountEmail", account_email
-            buildConfigField "String", "accountPassword", account_password
+            buildConfigField "String", "apiKey", api_key
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "ownerId", owner_id
-            buildConfigField "String", "accountEmail", account_email
-            buildConfigField "String", "accountPassword", account_password
+            buildConfigField "String", "apiKey", api_key
         }
     }
     compileOptions {
