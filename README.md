@@ -87,3 +87,5 @@ When GW token expires you can refresh it using `@POST v1/gateway/refresh?`.
         @Query("refresh_token", encoded = true) refresh_token: String
     ): Deferred<Response<LoginResponse>>
 ```
+
+Thanks for access ))
